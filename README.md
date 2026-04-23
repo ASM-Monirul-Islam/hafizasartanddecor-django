@@ -1,151 +1,188 @@
-# 🏡 Hafiza's Art & Decor – E-Commerce Platform
+# 🎨 Hafiza's Art & Decor — E-Commerce Platform
 
-A full-stack **Django-based E-Commerce Web Application** for managing handcrafted home decor product sales.
-
-This system replaces manual order handling via social media and phone calls with a structured digital platform for browsing products, placing orders, and managing order workflows efficiently.
-
-Developed as part of the **Software Engineering course** at **World University of Bangladesh (WUB)**.
+A full-featured web-based e-commerce platform for handcrafted home decor products, built with Django. This platform replaces a manual order management process (previously handled via social media and phone calls) with a streamlined, scalable, and user-friendly online storefront.
 
 ---
 
-## 📌 Project Information
+## 📖 About
 
-- **Project Name:** Hafiza's Art & Decor – E-Commerce Platform  
-- **Course:** Software Engineering  
-- **Department:** Computer Science & Engineering  
-- **University:** World University of Bangladesh  
+**Hafiza's Art & Decor** is a boutique online store specializing in handcrafted home decor products. Every item is made on-demand by hand, making each piece unique.
 
----
-
-## 👨‍💻 Team Members
-
-- A S M Monirul Islam – WUB03/23/65/3982  
-- Most. Hafiza Khatun Mim – WUB03/23/65/3973  
-- Ashfiq Hossain Tasin – WUB03/23/65/3968  
-- **Batch:** 65D  
+This platform empowers customers to browse products, manage a cart, and place orders — all without needing to create an account. At the same time, the admin (seller) gets a dedicated panel to manage products, categories, and orders with real-time status updates and optional email notifications.
 
 ---
 
-## 📖 Project Overview
+## ✨ Features
 
-Hafiza's Art & Decor is a modular Django-based e-commerce platform that enables customers to browse handcrafted home decor products, manage shopping carts, place orders, and track order status in real time.
+### 🛍️ Customer
+- Browse all products and view detailed product pages
+- Add products to cart and manage quantities
+- Place orders **without registration or login**
+- Choose delivery method: **Inside Dhaka** or **Outside Dhaka** (delivery charges vary)
+- Payment method: **Cash on Delivery only**
+- Track order status using Order ID
 
-Administrators can efficiently manage products, categories, and customer orders through a dedicated admin panel.
-
-The platform improves:
-
-- Order management efficiency  
-- Customer experience  
-- Data organization & tracking  
-- Digital transformation of manual sales process  
-
----
-
-## ✨ Key Features
-
-### 👤 Customer Features
-- User registration & authentication  
-- Email verification during signup  
-- Product browsing by category  
-- Product detail view  
-- Shopping cart system  
-- Secure checkout with delivery address  
-- Order tracking system  
-- Cash on Delivery (COD) support  
-
-### 🛠 Admin Features
-- Manage product categories  
-- Add, update, and delete products  
-- View and manage customer orders  
-- Update order status dynamically  
+### 🔧 Admin (Seller)
+- Secure login panel (accessible via navbar logo or footer link)
+- Add, update, and delete **product categories**
+- Add, update, and delete **product listings** with images
+- View and manage all incoming orders
+- Update order statuses (Pending → Confirmed → Delivered, etc.)
+- Receive **email notifications** for new orders *(optional, see setup)*
+- Send **order confirmation emails** to customers *(optional, see setup)*
 
 ---
 
-## 📦 Order Status Workflow
-Pending → Confirmed → Out for Delivery → Delivered
+## 🛠️ Tech Stack
 
-
----
-
-## 🧰 Technology Stack
-
-### Backend
-- Python 3.x  
-- Django Framework  
-
-### Frontend
-- HTML5  
-- CSS3  
-- JavaScript  
-
-### Database
-- SQLite (Development)  
-- PostgreSQL (Production-ready option)  
-
-### Tools & Services
-- Git & GitHub  
-- Django Admin Panel  
+| Layer | Technology |
+|---|---|
+| Backend | Django 4.x, Python 3.11 |
+| Frontend | HTML, CSS, JavaScript |
+| Database | SQLite (default) / PostgreSQL |
+| Image Handling | Pillow |
+| Email | Django Email (SMTP) |
 
 ---
 
-## 🏗 Project Structure
+## 🚀 Getting Started
 
-The project follows a modular Django architecture:
-accounts/ → User authentication & registration
+### 1. Clone the Repository
 
-products/ → Product management system
+```bash
+git clone <repo-url>
+cd hafizas-art-and-decor
+```
 
-cart/ → Shopping cart functionality
+### 2. Create & Activate Virtual Environment
 
-order/ → Order processing & tracking
+```bash
+python -m venv venv
+.\venv\Scripts\activate        # Windows
+# source venv/bin/activate     # macOS/Linux
+```
 
-admin_panel/ → Custom admin dashboard
+### 3. Install Dependencies
 
-homepage/ → Landing page & UI rendering
+```bash
+pip install django
+python.exe -m pip install --upgrade pip
+python -m pip install Pillow
+```
 
-base/ → Shared utilities (emails, models)
+Or install from requirements file (if available):
 
-hafizas_art_and_decor/ → Project configuration
+```bash
+pip install -r requirements.txt
+```
 
-templates/ → HTML templates (UI layer)
+### 4. Run the Development Server
 
-public/ → Static & media files
+```bash
+python manage.py runserver
+```
 
-
----
-
-## 📁 Static & Media Handling
-
-- Static files: `/public/static/`
-- Media uploads: `/public/media/product/`
-- Images stored dynamically via Django media system
-
----
-
-## ⚙️ System Requirements
-
-- Python 3.10+
-- Django 4.x+
-- Modern web browser (Chrome, Firefox, Edge)
-
----
-
-## 🚀 Future Improvements
-
-- Online payment gateway integration  
-- Product recommendation system  
-- Advanced analytics dashboard  
-- REST API for mobile application  
-- Improved UI/UX with modern frontend framework  
+Visit `http://127.0.0.1:8000/` in your browser.
 
 ---
 
-## 📌 Project Goal
+## 🔑 Admin Access
 
-To build a scalable and structured e-commerce platform that modernizes handcrafted product sales and improves both customer experience and backend order management efficiency.
+To access the admin panel, click the **logo in the navbar** or the **"Admin Login"** link in the footer.
+
+| Field | Value |
+|---|---|
+| Username | `admin` |
+| Password | `admin123` |
 
 ---
 
-## 📜 License
+## 📬 Email Notification System (Optional)
 
-This project is developed for academic purposes under World University of Bangladesh.
+The platform includes an email notification system for:
+- Notifying the admin when a new order is placed
+- Sending order confirmation emails to customers when order status changes
+
+> ⚠️ **Email credentials are intentionally hidden for privacy.** The email system is disabled by default and must be configured manually.
+
+### Step 1 — Set Email Credentials
+
+Open `hafizas_art_and_decor/settings.py` and fill in your Gmail (or SMTP) credentials:
+
+```python
+EMAIL_HOST_USER = 'youremail@example.com'
+EMAIL_HOST_PASSWORD = '**** **** **** ****'  # Use an App Password, not your regular password
+```
+
+> 💡 For Gmail, generate an **App Password** from your Google Account security settings.
+
+### Step 2 — Uncomment Email Calls in Views
+
+#### `order/views.py` — Lines 49–53
+
+Uncomment the following block to send emails when a new order is placed:
+
+```python
+try:
+    send_new_order_mail(order.order_id, order.name, order.email, order.phone, order.shipping_method, order.address, order.total_price)
+    send_user_order_mail(order.order_id, order.name, order.phone, order.email, order.shipping_method, order.total_price, order.address)
+except Exception as e:
+    print(e)
+```
+
+#### `admin_panel/views.py` — Lines 126, 143, 166
+
+Uncomment the following line at each location to send confirmation emails on order status updates:
+
+```python
+send_confirmation_mail(order.order_id, order.email, order.name, order.order_status)
+```
+
+> ℹ️ If email credentials are not set, the platform will continue to function normally — only email notifications will be skipped.
+
+---
+
+## 📁 Project Structure
+
+```
+hafizas-art-and-decor/
+├── accounts/           # Admin authentication
+├── cart/               # Cart session management
+├── order/              # Order placement and tracking
+├── admin_panel/        # Admin dashboard (products, categories, orders)
+├── homepage/           # Home page view
+├── products/           # Product listing and detail views
+├── base/               # Shared utilities (session, models, email helpers)
+├── templates/          # All HTML templates
+├── public/
+│   ├── static/         # CSS, JS, and static assets
+│   └── media/          # Uploaded product images
+├── hafizas_art_and_decor/  # Project settings and URL config
+├── manage.py
+└── requirements.txt
+```
+
+---
+
+## ⚙️ Configuration Notes
+
+- **No stock management** — Products are handcrafted on-demand; inventory tracking is not required.
+- **Payment** — Cash on Delivery only. No payment gateway integration.
+- **Delivery charges** vary based on location: Inside Dhaka vs. Outside Dhaka.
+- **Database** — SQLite is used by default. Can be switched to PostgreSQL in `settings.py`.
+
+---
+
+## 🌐 Browser Support
+
+| Browser | Supported |
+|---|---|
+| Google Chrome | ✅ |
+| Mozilla Firefox | ✅ |
+| Microsoft Edge | ✅ |
+
+---
+
+## 📄 License
+
+This project is for personal/educational use. All handcrafted product images and branding belong to **Hafiza's Art & Decor**.
