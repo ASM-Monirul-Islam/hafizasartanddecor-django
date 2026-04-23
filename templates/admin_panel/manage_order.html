@@ -1,0 +1,97 @@
+{% extends "base/base.html" %} {% block content %}
+<section class="manage_order section-p0">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <div class="table_responsive table_collapse">
+    {% if orders %}
+    <h3 class='title_msg'>Customer Orders</h3>
+    <table>
+        {% include "base/alert.html" %}
+        <thead>
+          <tr class="header_row">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Shipping Method</th>
+            <th>Total Price</th>
+            <th>Order Time</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          {% if not order.order_status == 'Delivered' %}
+          <tr>
+            <td class="main" data-label="View">{{order.name}}</td>
+            <td data-label="Email">{{order.email}}</td>
+            <td data-label="Phone">{{order.phone}}</td>
+            <td data-label="Shipping Method">
+              {{order.get_shipping_method_display}}
+            </td>
+            <td data-label="Price">{{order.total_price}}</td>
+            <td data-label="Order Time">{{order.order_time}}</td>
+            <td data-label="Status">
+              <form method="post" action="{% url 'change_order_status' order.pk %}">
+                {% csrf_token %}
+                <select name="status" onchange="this.form.submit()">
+                  {% for value, label in order.order_status_choices %}
+                  <option value="{{value}}" {% if order.order_status == value %}selected{% endif %}>{{label}}</option>
+                  {% endfor %}
+                </select>
+              </form>
+            </td>
+            <td data-label="Action">
+              <button
+                type="button"
+                onclick="window.location.href='{% url 'order_details' order.pk %}'"
+                class="action_btn_s1"
+              >
+                View
+              </button>
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          {% for order in orders %}
+          {% if order.order_status == 'Delivered' %}
+          <tr class="delivered_items">
+            <td class="main" data-label="⏷">{{order.name}}</td>
+            <td data-label="Email">{{order.email}}</td>
+            <td data-label="Phone">{{order.phone}}</td>
+            <td data-label="Shipping Method">
+              {{order.get_shipping_method_display}}
+            </td>
+            <td data-label="Price">{{order.total_price}}</td>
+            <td data-label="Order Time">{{order.order_time}}</td>
+            <td data-label="Status">
+              <form method="post" action="{% url 'change_order_status' order.pk %}">
+                {% csrf_token %}
+                <select name="status" onchange="this.form.submit()">
+                  {% for value, label in order.order_status_choices %}
+                  <option value="{{value}}" {% if order.order_status == value %}selected{% endif %}>{{label}}</option>
+                  {% endfor %}
+                </select>
+              </form>
+            </td>
+            <td data-label="Action">
+              <button
+                type="button"
+                onclick="window.location.href='{% url 'order_details' order.pk %}'"
+                class="action_btn_s1"
+              >
+                View
+              </button>
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <h3 class='title_msg'>No Order yet</h3>
+    </div>
+    {% endif %}
+</section>
+{% endblock content %}

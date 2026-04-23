@@ -1,0 +1,29 @@
+{% extends "base/base.html" %} {% block content %}
+<section class="user_auth_parent section-p0">
+  <form method="post" class="user_auth_child form" id="login_form">
+    {% csrf_token %}
+    <a href="{% url 'home' %}"><i class="fa-solid fa-xmark close_user_auth"></i></a>
+    <h3>Admin Login</h3>
+    {% include "base/alert.html" %}
+    <label for="username">Username</label>
+    <input
+      type="text"
+      name="username"
+      class="input"
+      placeholder="Username"
+      required
+      autocomplete="username"
+    />
+    <label for="password">Password</label>
+    <input
+      type="password"
+      name="password"
+      class="input login_password password"
+      placeholder="Password"
+      required
+      autocomplete="new-password"
+    />
+    <button type="submit" class="form_btn login_btn button">Login</button>
+  </form>
+</section>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "base/base.html" %} {% block content %}
+<section id="get_product" class="get_product">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <img src="/media/{{products.product_image}}" class="product_image" />
+  <div class="product_details">
+    <p>{{products.product_category}}</p>
+    <h4>{{products.product_name}}</h4>
+    <h3>BDT {{products.product_price}}</h3>
+    <p class="product_description">
+      {{products.product_description}}
+    </p>
+    {% if not user.is_superuser %}
+    <form method="post" action="{% url 'add_to_cart' products.slug %}" class="quantity_container_parent">
+      {% csrf_token %}
+      <div class="quantity_container_child">
+        <div><i class="fa-solid fa-minus minus"></i></div>
+        <input type="text" name="quantity" class="quantity" readonly />
+        <div><i class="fa-solid fa-plus plus"></i></div>
+      </div>
+      <button type="submit" class="button add_to_cart_btn" >Add to Cart</button>
+    </form>
+    {% else %}
+    <button onclick="window.location.href='{% url "edit_product" products.slug %}'" type='button' class=' add_to_cart_btn button'>Edit</button>
+    <button data-url="{% url 'delete_product' products.slug %}"  data-title='Delete Product'  data-messgae='This product will be deleted permanently' type='button' class='confirm-action add_to_cart_btn button' style='margin:10px 0px'>Delete</button>
+    {% endif %}
+  </div>
+</section>
+{% endblock content %}

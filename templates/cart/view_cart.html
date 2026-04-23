@@ -1,0 +1,53 @@
+{% extends "base/base.html" %} {% block content %}
+<section id="cart" class="cart section-p0">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <div class="table_responsive">
+    {% if items %}
+    <h3 class="title_msg">Your Cart Items</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Image</th>
+          <th>Category</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td data-label="Product">{{item.product.product_name}}</td>
+          <td data-label="Image">
+            <img src="/media/{{item.product.product_image}}" width="80">
+          </td>
+          <td data-label="Category">{{item.product.product_category}}</td>
+          <td data-label="Quantity">{{item.product_quantity}}</td>
+          <td data-label="Total Price">{{item.total_price}}</td>
+          <td data-label="Delete">
+          <button class='confirm-action delete_btn'
+            data-url='{% url "delete_cart_product" item.product.slug %}'
+            data-title='Delete Cart'
+            data-message='This item will be deleted from your cart'>
+            <i class="fa-solid fa-trash" style="color: rgb(234, 11, 11)"></i>
+          </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h3 class="empty_msg">Your Cart is Empty</h3>
+    {% endif %}
+  </div>
+  <div class='btn_section'>
+    {% if items %}
+    <button onclick="window.location.href='{% url 'checkout' %}'" class="button cart_btn" type="button">Checkout</button>
+    {% endif %}
+    <button onclick="window.location.href='{% url 'home' %}'" class="button cart_btn" type="button">Continue Shopping</button>
+  </div>
+</section>
+{% endblock content %}

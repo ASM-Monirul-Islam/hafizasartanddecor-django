@@ -1,0 +1,71 @@
+{% extends "base/base.html" %} {% block content %}
+<section class="add_product section-p0">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <h3 class="title_msg">Add Product</h3>
+  <form
+    class="add_product_form form"
+    action="{% if product %}{% url 'edit_product' product.slug %}{% else %}{% url 'add_product' %}{% endif %}"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <label>Product Name</label>
+    <input
+      type="text"
+      name="product_name"
+      class="input"
+      required
+      value="{{product.product_name | default:''}}"
+    />
+    <div>
+      <select name="product_category" class="input" required>
+        {% for category in categories %}
+        <option
+          value="{{category.category_name}}"
+          {%
+          if
+          product.product_category=""
+          ="category"
+          %}
+          selected
+          {%
+          endif
+          %}
+        >
+          {{category.category_name}}
+        </option>
+        {% endfor %}
+      </select>
+      <button
+        class="btn"
+        type="button"
+        onclick="window.location.href='{% url 'add_category' %}'"
+      >
+        Add
+      </button>
+    </div>
+    <label>Product Price</label>
+    <input
+      type="number"
+      name="product_price"
+      class="input"
+      required
+      value="{{product.product_price | default:''}}"
+    />
+    <label>Product Description</label>
+    <textarea
+      name="product_description"
+      class="input"
+      placeholder="add description"
+    >
+{{product.product_description | default:''}}</textarea
+    >
+    <input type="file" name="product_image" class="input"/>
+    <button type="submit" class="form_btn button">
+      {% if product %} Update Product {% else %} Add Product {% endif %}
+    </button>
+  </form>
+</section>
+{% endblock content %}

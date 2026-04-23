@@ -1,0 +1,46 @@
+{% extends "base/base.html" %} {% block content %}
+<section class="add_category section-p0">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <h3 class="section_title">Manage Category</h3>
+  {% include "base/alert.html" %}
+  <form action="{% url 'add_category' %}" method="post">
+    {% csrf_token %}
+    <div class="section_header">
+      <input
+        type="text"
+        name="category_name"
+        class="input category_name"
+        required
+      />
+      <button type="submit" class="add_btn">
+        Add <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+  </form>
+  <table class="category_table">
+    <tr class="category_row header_row">
+      <th class="cell_left">Category Name</th>
+      <th class="cell_right">Action</th>
+    </tr>
+    {% for category in categories %}
+    <tr class="category_row">
+      <td class="cell_left">{{category.category_name}}</td>
+      <td class="cell_right">
+        <button
+          class="confirm-action delete_btn"
+          data-url="{% url 'delete_category' category.slug %}"
+          data-title="Delete Category"
+          data-message="This Category will be deleted permanently"
+        >
+          <i class="fa-solid fa-trash" style="color: rgb(234, 11, 11)"></i>
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock content %}

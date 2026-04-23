@@ -1,0 +1,64 @@
+{% extends "base/base.html" %} {% block content %}
+<section class="view_order section-p0">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <h3 class="section_title">Track your order</h3>
+  {% include "base/alert.html" %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="section_header">
+      <input
+        type="text"
+        name="order_id"
+        class="input"
+        placeholder="Search order by OrderID"
+        required
+      />
+      <button type="submit" class="add_btn button">Find</button>
+    </div>
+  </form>
+  <div class="table_responsive">
+    {% if orders %}
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Shipping Method</th>
+          <th>Total Price</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td data-label="OrderID">{{order.order_id}}</td>
+          <td data-label="Name">{{order.name}}</td>
+          <td data-label="Email">{{order.email}}</td>
+          <td data-label="Phone">{{order.phone}}</td>
+          <td data-label="Shipping Method">
+            {{order.get_shipping_method_display}}
+          </td>
+          <td data-label="Total Price">{{order.total_price}}</td>
+          <td data-label="Order Status">{{order.order_status}}</td>
+          <td data-label="Action">
+            <button
+              type="button"
+              onclick="window.location.href='{% url 'order_details' order.pk %}'"
+              class="action_btn_s1"
+            >
+              View
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</section>
+{% endblock content %}

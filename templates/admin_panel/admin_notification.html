@@ -1,0 +1,64 @@
+{% extends "base/base.html" %} {% block content %}
+<section class="section-p0">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <div class="table_responsive table_collapse">
+    {% if orders %}
+    <h3 class="title_msg">You have {{orders.count}} Notifications</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Shipping Method</th>
+          <th>Total Price</th>
+          <th colspan="3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr class="row">
+          <td data-label="View">{{order.name}}</td>
+          <td data-label="Email">{{order.email}}</td>
+          <td data-label="Phone">{{order.phone}}</td>
+          <td data-label="Shipping Method">
+            {{order.get_shipping_method_display}}
+          </td>
+          <td data-label="Total Price">{{order.total_price}}</td>
+          <td data-label="Details">
+            <button
+              type="button"
+              onclick="window.location.href='{% url 'order_details' order.pk %}'"
+              class="table_btn"
+            >
+              View
+            </button>
+          </td>
+          <td data-label="Confirm">
+            <a href="{% url 'confirm_order' order.pk %}"
+              ><i
+                class="fa-solid fa-check order_confirmation_btn confirm action_btn"
+              ></i
+            ></a>
+          </td>
+          <td data-label="Cancel">
+            <button
+              class="confirm-action delete_btn"
+              data-url='{% url "cancel_order" order.pk %}'
+              data-title="Delete Notification"
+              data-message="This notification will be deleted">
+              <i class="fa-solid fa-xmark order_confirmation_btn cancel action_btn"></i>
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h3 class="empty_msg">No Notifications for you</h3>
+    {% endif %}
+  </div>
+</section>
+{% endblock content %}

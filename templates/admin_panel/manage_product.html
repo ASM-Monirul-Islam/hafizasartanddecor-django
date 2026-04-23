@@ -1,0 +1,58 @@
+{% extends "base/base.html" %} {% block content %}
+<section class="manage_product">
+  {% include "base/alert.html" %}
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <div class="section_header">
+    <h3>Your Products</h3>
+    <button type="button" class="btn button" onclick="window.location.href='{% url "add_product" %}'">Add Products +</button>
+  </div>
+  <div class="table_responsive table_collapse">
+  <table>
+    <thead>
+      <tr class="header_row">
+        <th>Name</th>
+        <th>Image</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th class="action" colspan="2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td class="name" data-label="View">
+          <strong>{{product.product_name}}</strong>
+        </td>
+        <td data-label="Image">
+          <a href="{% url 'get_product' product.slug %}"
+          ><img src="/media/{{product.product_image}}" width="50"
+          /></a>
+        </td>
+        <td data-label="Category">{{product.product_category}}</td>
+        <td data-label="Price">{{product.product_price}}</td>
+        <td data-label="Edit">
+          <a href="{% url 'edit_product' product.slug %}"
+          ><i class="fa-solid fa-pen-to-square action_btn"></i
+            ></a>
+          </td>
+          <td data-label="Delete">
+            <button class='confirm-action delete_btn'
+            data-url="{% url 'delete_product' product.slug %}"
+            data-title='Delete Product'
+            data-messgae='This product will be deleted permanently'>
+            <i
+            class="fa-solid fa-trash action_btn"
+            style="color: rgb(234, 11, 11)"
+            ></i
+            >
+          </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+  </div>
+</section>
+{% endblock content %}

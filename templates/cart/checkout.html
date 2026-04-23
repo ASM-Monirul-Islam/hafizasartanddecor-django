@@ -1,0 +1,116 @@
+{% extends "base/base.html" %} {% block content %} {% load static %}
+<div class="place_order_window">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <div class="place_order">
+    <h3>Place Order</h3>
+    <form action="{% url 'place_order' %}" method="post" class="place_order_form form">
+      {% csrf_token %}
+      <label for="name">Your Full Name</label>
+      <input
+        type="text"
+        name="receiver_name"
+        id="order_name"
+        class="input"
+        required
+      />
+      <label for="phone">Your Phone Number</label>
+      <input
+        type="number"
+        name="receiver_phone"
+        id="order_phone"
+        class="input"
+        required
+      />
+      <label for="email">Your Email</label>
+      <input
+        type="email"
+        name="receiver_email"
+        id="order_email"
+        class="input"
+        required
+      />
+      <label for="address">Address</label>
+      <textarea
+        name="receiver_address"
+        id="order_address"
+        placeholder="Write Full Address"
+        required
+        class="input"
+      ></textarea>
+      <label for="order_note">Order Note (Optional)</label>
+      <textarea
+        name="order_note"
+        class="order_note_input input"
+        id="order_note"
+      ></textarea>
+      <div class="shipping_method_container">
+        <label for="shipping_method">Shipping Method</label>
+        <div class="inside_dhaka_container">
+          <input
+            type="radio"
+            name="shipping_method"
+            class="shipping_radio"
+            id="shipping_inside"
+            value="Deliver Inside Dhaka"
+            required
+          />Deliver inside Dhaka (BDT 70)
+        </div>
+        <div class="outside_dhaka_container">
+          <input
+            type="radio"
+            name="shipping_method"
+            class="shipping_radio"
+            id="shipping_outside"
+            value="Deliver Outside Dhaka"
+            required
+          />
+          Deliver outside Dhaka (BDT 120)
+        </div>
+      </div>
+      <table class="table_responsive">
+		<thead>
+			<tr>
+				<td>Image</td>
+				<td>Name</td>
+				<td>Quantity</td>
+				<td>Price</td>
+			</tr>
+		</thead>
+      <tbody>
+			{% for item in cart %}
+          <tr class="order_row">
+            <td data-label="⏷" class="order_image">
+              <img src="/media/{{item.product.product_image}}" />
+            </td>
+            <td data-label="Product" >{{item.product.product_name}}</td>
+            <td data-label="Quantity" class="order_quantity">Q-{{item.product_quantity}}</td>
+            <td data-label="Price" class="order_unit_price">{{item.total_price}}</td>
+          </tr>
+		  {% endfor %}
+        </tbody>
+      </table>
+      <div class="order_price_section">
+        <table>
+            <tr class="sub_total_price_row">
+              <td class="first_column">Subtotal</td>
+              <td class="last_column unit_price"></td>
+            </tr>
+            <tr class="delivery_charge_row">
+              <td class="first_column">Delivery Cahrge</td>
+              <td class="last_column delivery_charge"></td>
+            </tr>
+            <tr class="total_price_row">
+              <td class="first_column">Total Price</td>
+              <td class="last_column total_price"></td>
+            </tr>
+        </table>
+      </div>
+      
+      <button type="submit" class="button">Place Order</button>
+      <button type="button" class="button" onclick="window.location.href='{% url "view_cart" %}'" class="cancel_place_order">Cancel</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,135 @@
+{% extends "base/base.html" %} {% block content %}
+<section class="order_details section-p0">
+  <button class="back_btn" onclick="window.location.href='javascript:history.back()'">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <h4 class="order_details_title">Thanks for your order, Monirul</h4>
+  <div class="customer_details">
+    <h3>
+      {% if not user.is_superuser %} Your {% else %} Customer {% endif %}
+      details
+    </h3>
+    <table class="table_responsive">
+      <thead>
+        <tr class="header_row">
+          <th>Name</th>
+          <th>Email</th>
+          <th>Shipping Method</th>
+          <th>Address</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Product">{{order.name}}</td>
+          <td data-label="Email">{{order.email}}</td>
+          <td data-label="Shipping Method">{{order.shipping_method}}</td>
+          <td data-label="Address">{{order.address}}</td>
+          <td data-label="Time">{{order.order_time}}</td>
+          {% if user.is_superuser and order.is_confirmed %}
+          <td data-label="Status">
+            <form
+              method="post"
+              action="{% url 'change_order_status' order.pk %}"
+            >
+              {% csrf_token %}
+              <select
+                name="status"
+                class="table_select"
+                onchange="this.form.submit()"
+              >
+                {% for value, label in order.order_status_choices %}
+                <option value="{{value}}" 
+                {% if order.order_status == value %}selected{% endif %}>
+                  {{label}}
+                </option>
+                {% endfor %}
+              </select>
+            </form>
+          </td>
+          {% else %}
+          <td>{{order.order_status}}</td>
+          {% endif %}
+          <td data-label="Action">
+            {% if user.is_superuser %}
+            <button
+              type="button"
+              data-url="{% url 'cancel_order' order.pk %}"
+              data-title="Cancel Order?"
+              data-message="This Order will be cancelled permanently"
+              class="confirm-action cancel"
+            >
+              Cancel
+            </button>
+            {% elif order.is_confirmed %}
+            <button type="button" class="cancel inactive">Cancel</button>
+            {% elif order.order_status == 'Delivered' %}
+            <button
+              type="button"
+              data-url="{% url 'delete_order' order.pk %}"
+              data-title="Delete Order?"
+              data-message="Click yes to delete this order!"
+              class="confirm-action cancel">
+              Delete
+            </button>
+            {% else %}
+            <button
+              type="button"
+              data-url="{% url 'cancel_order' order.pk %}"
+              data-title="Cancel Order?"
+              data-message="This Order will be cancelled permanently"
+              class="confirm-action cancel"
+            >
+              Cancel
+            </button>
+            {% endif %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="product_items">
+    <h3>{% if not user.is_superuser %} Your {% endif %} Products</h3>
+    <table class="table_responsive">
+      <thead>
+        <tr class="header_row">
+          <th>Name</th>
+          <th>Image</th>
+          <th>Category</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.items.all %}
+        <tr>
+          
+          <td data-label="⏷">
+            <strong
+            ><a href="{% url 'get_product' item.product.slug %}"
+            >{{item.product.product_name}}</a
+            ></strong
+            >
+          </td>
+          <td data-label="Image">
+            <a href="{% url 'get_product' item.product.slug %}"
+            ><img src="/media/{{item.product.product_image}}" width="50"
+            /></a>
+          </td>
+          <td data-label="Category">{{item.product.product_category}}</td>
+          <td data-label="Quantity">{{item.quantity}}</td>
+          <td data-label="Price">{{item.price}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="total_price">
+    <h4>Cash on Delivery</h4>
+    <p>Total Price Payable: {{order.total_price}} tk</p>
+  </div>
+</section>
+{% endblock content %}

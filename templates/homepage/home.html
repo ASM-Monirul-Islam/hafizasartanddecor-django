@@ -1,0 +1,50 @@
+{% extends "base/base.html" %} {% block content %} {% load static %}
+
+<section id="hero">
+  <div id="hero_texts">
+    {% if user.is_authenticated %} {% if user.is_superuser %}
+    <h4>Hello Admin,</h4>
+    <h4><strong>{{user.username}}</strong></h4>
+    <h3>Welcome to</h3>
+    {% else %}
+    <h4>Hello, <strong>{{user.first_name}}</strong></h4>
+    <h3>Welcome to</h3>
+    {% endif %} {% else %}
+    <h4>Handmade with love</h4>
+    <h3>Styled with soul</h3>
+    {% endif %}
+    <h1>Hafiza's Art & Decor</h1>
+    <p>Turning Simple Spaces Into Beautiful Stories.</p>
+  </div>
+  <div id="hero_img"></div>
+</section>
+
+<section id="featured_products" class="section-p1 section-m1">
+  <h2>Our Products</h2>
+  <div class="category_section">
+    <p>Browse Products by Category</p>
+    <select name="category" id="category" onchange="filterProduct()">
+      <option value="all">All Products</option>
+      {% for cat in categories %}
+      <option value="{{cat.category_name}}">{{cat.category_name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="product_container">
+    {% for prod in products %}
+    <div onclick="window.location.href='{% url 'get_product' prod.slug %}'" class="product" data-category="{{prod.product_category}}">
+      <div class="product_image_container">
+        <img src="/media/{{prod.product_image}}"/>
+      </div>
+      <div class="product_description">
+        <span class="product_category">{{prod.product_category}}</span>
+        <h5 class="product_name">{{prod.product_name}}</h5>
+        <h4 class="product_price">BDT {{prod.product_price}}</h4>
+      </div>
+    </div>
+    {% empty %}
+    <h4>Products not added yet</h4>
+    {% endfor %}
+  </div>
+</section>
+{% endblock content %}

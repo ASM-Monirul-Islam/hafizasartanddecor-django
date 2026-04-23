@@ -1,0 +1,43 @@
+{% load static %}
+<section id="footer" class="section-p1">
+  <div class="footer_column footer_contact">
+    <img src="{% static 'assets/logo_footer.png' %}" />
+    <h4>Contact</h4>
+    <p><strong>Adress: </strong> &nbsp; Mirpur 07, Dhaka 1216</p>
+    <p><strong>Phone: </strong> &nbsp; 01607311921</p>
+    <p><strong>Hours: </strong> &nbsp; 10:00 AM - 12:00 AM</p>
+  </div>
+  <div class="footer_column footer_social_link">
+    <h4>Follow us</h4>
+    <div class="footer_social_media_icon">
+      <a href="https://www.facebook.com/share/1FTQMvGNiZ/" target="_new"><i class="fa-brands fa-facebook"></i></a>
+      <a href="https://youtube.com/@hafizasartanddecor?si=q6qwDpBsHimbcgzK" target="_new"><i class="fa-brands fa-youtube"></i></a>
+      {% comment %} <a href=""><i class="fa-brands fa-instagram"></i></a> {% endcomment %}
+    </div>
+  </div>
+  <div class="footer_column footer_about">
+    <h4>About</h4>
+    <a href="{% url 'about_us' %}">About Us</a>
+    <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+    <a href="{% url 'terms_and_condition' %}">Terms & Condition</a>
+    <a href="{% url 'return_policy' %}">Return Policy</a>
+    <a href="{% url 'contact_us' %}">Contact Us</a>
+  </div>
+  <div class="footer_column footer_my_account">
+    <h4>My Account</h4>
+    {% if user.is_superuser %}
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'add_category' %}">Category</a>
+    <a href="{% url 'manage_product' %}">Products</a>
+    <a href="{% url 'manage_order' %}">Orders</a>
+    {% else %}
+    <a href="{% url 'login' %}">Admin Login</a>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'view_cart' %}">My Cart</a>
+    <a href="{% url 'view_order' %}">My Order</a>
+    {% endif %}
+  </div>
+  <a href="#" class="up_arrow">
+    <i class="fa-solid fa-arrow-up arrow"></i>
+  </a>
+</section>

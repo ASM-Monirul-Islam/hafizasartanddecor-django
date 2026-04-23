@@ -1,0 +1,36 @@
+{% load static %}
+<section id="header">
+  <span data-tooltip="Click to login as Admin" data-direction="right">
+    <a href="{% url 'login' %}"><img src="{% static "assets/logo_header.png" %}" id="logo" /></a>
+  </span>
+  
+  <ul id="navbar">
+    {% if user.is_superuser %}
+    <li><a {% if request.path == '/admin_panel/admin_notification/' %} class="active" {% endif %} href="{% url 'admin_notification' %}"><i class="fa-solid fa-bell"></i></a></li>
+    {% endif %}
+    <li><a {% if request.path == '/' %} class="active" {% endif %} href="{% url 'home' %}">Home</a></li>
+    {% if user.is_superuser %}
+    <li><a {% if request.path == '/admin_panel/add_category/' %} class="active" {% endif %} href="{% url 'add_category' %}">Category</a></li>
+    <li><a {% if request.path == '/admin_panel/manage_product/' %} class="active" {% endif %} href="{% url 'manage_product' %}">Products</a></li>
+    <li><a {% if request.path == '/admin_panel/manage_order/' %} class="active" {% endif %} href="{% url 'manage_order' %}">Orders</a></li>
+
+    {% else %}
+    <li><a {% if request.path == '/cart/view_cart/' %} class="active" {% endif %} href="{% url 'view_cart' %}">Cart</a></li>
+    <li><a {% if request.path == '/order/view_order/' %} class="active" {% endif %} href="{% url 'view_order' %}">Order</a></li>
+    <li><a {% if request.path == '/contact/' %} class="active" {% endif %} href="{% url 'contact_us' %}">Contact</a></li>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <button class="confirm-action logout"
+      data-url="{% url 'logout' %}"
+      data-method="POST"
+      data-title="Logout"
+      data-message="Are you sure you want to logout?">
+      Logout
+    </button>
+    {% endif %}
+    <i id="close" class="fa-solid fa-xmark"></i>
+  </ul>
+  <div id="mobile">
+    <i id="bar" class="fa-solid fa-bars"></i>
+  </div>
+</section>
