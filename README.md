@@ -6,7 +6,7 @@ A full-featured web-based e-commerce platform for handcrafted home decor product
 
 ## 📖 About
 
-**Hafiza's Art & Decor** is a boutique online store specializing in handcrafted home decor products. Every item is made on-demand by hand, making each piece unique.
+**Hafiza's Art & Decor** is a online store specializing in handcrafted home decor products. Every item is made on-demand by hand, making each piece unique.
 
 This platform empowers customers to browse products, manage a cart, and place orders — all without needing to create an account. At the same time, the admin (seller) gets a dedicated panel to manage products, categories, and orders with real-time status updates and optional email notifications.
 
