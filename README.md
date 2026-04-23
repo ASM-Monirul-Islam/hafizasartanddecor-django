@@ -14,9 +14,9 @@ This platform empowers customers to browse products, manage a cart, and place or
 
 ## 🌐 Live Demo
 
-The platform is live and accessible at:
+The platform is live at:
 
-🔗 **[https://hafizasartanddecor.pythonanywhere.com](https://hafizasartanddecor.pythonanywhere.com)**
+🔗 **[Hafiza's Art & Decor](https://hafizasartanddecor.pythonanywhere.com)**
 
 ---
 
