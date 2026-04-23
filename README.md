@@ -193,4 +193,6 @@ hafizas-art-and-decor/
 
 ## 📄 License
 
-This project is for personal/educational use. All handcrafted product images and branding belong to **Hafiza's Art & Decor**.
+This project is for **Hafiza's Art & Decor** and is intended for production and business use.
+
+All rights are reserved. Unauthorized copying, distribution, or modification of this codebase without permission is strictly prohibited.
